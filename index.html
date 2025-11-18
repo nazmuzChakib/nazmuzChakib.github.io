@@ -1,316 +1,172 @@
-<!doctype html>
-<html lang="en">
- <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cypher-Z - Microcontroller &amp; Ethical Hacking Experts</title>
-  <script src="/_sdk/element_sdk.js"></script>
-  <style>
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyphar-Z | Microcontroller, Automation & Ethical Hacking</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #6C63FF;
+            --secondary: #4A44C6;
+            --accent: #FF6584;
+            --dark: #121212;
+            --light: #F5F5F7;
         }
 
         body {
-            box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: #e0e0e0;
-            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #16213e 100%);
-            min-height: 100%;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: var(--light);
+            min-height: 100vh;
             overflow-x: hidden;
         }
 
-        html {
-            height: 100%;
-            scroll-behavior: smooth;
-        }
-
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 1.5rem;
+            padding: 2rem;
         }
 
-        /* Header */
-        .header {
-            background: rgba(10, 10, 26, 0.98);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(0, 255, 136, 0.15);
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
+        /* Language Toggle */
+        .language-toggle {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            display: flex;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            padding: 5px;
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 50px;
+            cursor: pointer;
             transition: all 0.3s ease;
+            font-weight: 500;
         }
 
-        .header.scrolled {
-            background: rgba(10, 10, 26, 0.95);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        .lang-btn.active {
+            background: var(--primary);
         }
 
-        .nav {
+        /* Header Styles */
+        header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 0;
-            position: relative;
+            padding: 1.5rem 0;
+            margin-bottom: 3rem;
         }
 
         .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo h1 {
             font-size: 2.2rem;
-            font-weight: 900;
-            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            background: linear-gradient(90deg, var(--primary), var(--accent));
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-decoration: none;
-            transition: transform 0.3s ease;
+            color: transparent;
+            font-weight: 700;
         }
 
-        .logo:hover {
-            transform: scale(1.05);
+        .logo-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
         }
 
-        .nav-links {
+        nav ul {
             display: flex;
             list-style: none;
-            margin: 0;
-            padding: 0;
-            gap: 2.5rem;
-            align-items: center;
+            gap: 2rem;
         }
 
-        .nav-links a {
-            color: #e0e0e0;
+        nav a {
+            color: var(--light);
             text-decoration: none;
             font-weight: 500;
-            font-size: 1rem;
             padding: 0.5rem 1rem;
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a:hover {
-            color: #00ff88;
-            background: rgba(0, 255, 136, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 50%;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(45deg, #00ff88, #00d4ff);
-            transition: all 0.3s ease;
-            transform: translateX(-50%);
-        }
-
-        .nav-links a:hover::after {
-            width: 80%;
-        }
-
-        /* Mobile Menu */
-        .mobile-menu-btn {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            padding: 0.5rem;
-            background: none;
-            border: none;
-            z-index: 1001;
-        }
-
-        .mobile-menu-btn span {
-            width: 25px;
-            height: 3px;
-            background: #00ff88;
-            margin: 3px 0;
-            transition: 0.3s;
-            border-radius: 2px;
-        }
-
-        .mobile-menu-btn.active span:nth-child(1) {
-            transform: rotate(-45deg) translate(-5px, 6px);
-        }
-
-        .mobile-menu-btn.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .mobile-menu-btn.active span:nth-child(3) {
-            transform: rotate(45deg) translate(-5px, -6px);
-        }
-
-        .mobile-menu {
-            position: fixed;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100vh;
-            background: rgba(10, 10, 26, 0.98);
-            backdrop-filter: blur(20px);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: left 0.3s ease;
-            z-index: 999;
-        }
-
-        .mobile-menu.active {
-            left: 0;
-        }
-
-        .mobile-menu a {
-            color: #e0e0e0;
-            text-decoration: none;
-            font-size: 2rem;
-            font-weight: 600;
-            margin: 1rem 0;
-            padding: 1rem 2rem;
-            border-radius: 15px;
+            border-radius: 8px;
             transition: all 0.3s ease;
         }
 
-        .mobile-menu a:hover {
-            color: #00ff88;
-            background: rgba(0, 255, 136, 0.1);
-            transform: scale(1.1);
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
 
         /* Hero Section */
         .hero {
-            padding: 8rem 0 6rem;
             text-align: center;
-            position: relative;
-            overflow: hidden;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
+            padding: 4rem 0;
+            margin-bottom: 4rem;
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(0, 255, 136, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(0, 212, 255, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(255, 107, 107, 0.1) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            width: 100%;
-        }
-
-        .hero h1 {
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            font-weight: 900;
+        .hero h2 {
+            font-size: 3.5rem;
             margin-bottom: 1.5rem;
-            background: linear-gradient(45deg, #00ff88, #00d4ff, #ff6b6b);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: glow 3s ease-in-out infinite alternate;
-            line-height: 1.1;
-        }
-
-        @keyframes glow {
-            from { 
-                filter: drop-shadow(0 0 20px rgba(0, 255, 136, 0.3));
-                transform: scale(1);
-            }
-            to { 
-                filter: drop-shadow(0 0 40px rgba(0, 255, 136, 0.6));
-                transform: scale(1.02);
-            }
+            line-height: 1.2;
         }
 
         .hero p {
-            font-size: clamp(1.1rem, 3vw, 1.4rem);
-            margin-bottom: 3rem;
-            color: #c0c0c0;
+            font-size: 1.3rem;
             max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.7;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+            line-height: 1.6;
         }
 
         .cta-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 1.2rem 2.5rem;
-            background: linear-gradient(45deg, #00ff88, #00d4ff);
-            color: #0a0a1a;
-            text-decoration: none;
+            display: inline-block;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 2.5rem;
             border-radius: 50px;
-            font-weight: 700;
+            text-decoration: none;
+            font-weight: 600;
             font-size: 1.1rem;
             transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 20px rgba(0, 255, 136, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .cta-button:hover::before {
-            left: 100%;
+            box-shadow: 0 5px 15px rgba(108, 99, 255, 0.4);
         }
 
         .cta-button:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(108, 99, 255, 0.6);
         }
 
-        .cta-button:active {
-            transform: translateY(-1px) scale(1.02);
-        }
-
-        /* Sections */
-        .section {
-            padding: 6rem 0;
-            position: relative;
+        /* Section Styles */
+        section {
+            margin-bottom: 6rem;
         }
 
         .section-title {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 800;
             text-align: center;
-            margin-bottom: 4rem;
-            color: #00ff88;
-            position: relative;
-            display: inline-block;
-            width: 100%;
+            margin-bottom: 3rem;
         }
 
-        .section-title::after {
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
             content: '';
             position: absolute;
             bottom: -10px;
@@ -318,774 +174,587 @@
             transform: translateX(-50%);
             width: 80px;
             height: 4px;
-            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            background: linear-gradient(90deg, var(--primary), var(--accent));
             border-radius: 2px;
         }
 
-        /* About Section */
-        .about {
-            background: rgba(26, 26, 46, 0.3);
-            backdrop-filter: blur(10px);
-            position: relative;
+        .section-title p {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        .about::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, rgba(0, 255, 136, 0.05) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        .about-content {
+        /* Liquid Glass Cards */
+        .cards-container {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 5rem;
-            align-items: center;
-            position: relative;
-            z-index: 2;
-        }
-
-        .about-text {
-            font-size: clamp(1rem, 2.5vw, 1.2rem);
-            color: #d0d0d0;
-            line-height: 1.8;
-        }
-
-        .about-text p {
-            margin-bottom: 1.5rem;
-        }
-
-        .about-features {
-            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2rem;
         }
 
-        .feature-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 1.5rem;
-            padding: 2rem;
-            background: rgba(0, 255, 136, 0.08);
-            border-radius: 20px;
-            border: 1px solid rgba(0, 255, 136, 0.2);
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .feature-item:hover {
-            transform: translateY(-5px);
-            background: rgba(0, 255, 136, 0.12);
-            border-color: rgba(0, 255, 136, 0.4);
-            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.1);
-        }
-
-        .feature-icon {
-            font-size: 2rem;
-            min-width: 2rem;
-            margin-top: 0.2rem;
-        }
-
-        .feature-content h4 {
-            color: #00ff88;
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .feature-content p {
-            color: #b0b0b0;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            margin: 0;
-        }
-
-        /* Services Section */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2.5rem;
-            margin-top: 4rem;
-        }
-
-        .service-card {
-            background: rgba(22, 33, 62, 0.6);
-            backdrop-filter: blur(15px);
-            padding: 3rem 2.5rem;
-            border-radius: 25px;
-            border: 1px solid rgba(0, 255, 136, 0.15);
-            transition: all 0.4s ease;
+        .liquid-glass-card {
             position: relative;
+            border-radius: 28px;
+            isolation: isolate;
+            box-shadow: 0px 6px 21px -8px rgba(255, 255, 255, 0.2);
+            cursor: pointer;
             overflow: hidden;
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 212, 255, 0.05) 100%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .service-card:hover::before {
-            opacity: 1;
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            border-color: rgba(0, 255, 136, 0.4);
-            box-shadow: 0 20px 50px rgba(0, 255, 136, 0.15);
-        }
-
-        .service-icon {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            display: block;
-            position: relative;
-            z-index: 2;
             transition: transform 0.3s ease;
+            min-height: 300px;
         }
 
-        .service-card:hover .service-icon {
-            transform: scale(1.1) rotate(5deg);
+        .liquid-glass-card:hover {
+            transform: translateY(-10px);
         }
 
-        .service-card h3 {
-            color: #00ff88;
-            margin-bottom: 1.5rem;
-            font-size: clamp(1.2rem, 3vw, 1.4rem);
-            font-weight: 700;
-            position: relative;
-            z-index: 2;
-        }
-
-        .service-card p {
-            color: #c0c0c0;
-            line-height: 1.7;
-            font-size: 1rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Contact Section */
-        .contact {
-            background: rgba(15, 15, 35, 0.6);
-            backdrop-filter: blur(15px);
-            position: relative;
-        }
-
-        .contact::before {
+        /* Tint and inner shadow layer */
+        .liquid-glass-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 50% 50%, rgba(0, 255, 136, 0.1) 0%, transparent 70%);
+            inset: 0;
+            z-index: 0;
+            border-radius: 28px;
+            box-shadow: inset 0 0 12px -4px rgba(255, 255, 255, 0.3);
+            background-color: rgba(255, 255, 255, 0);
             pointer-events: none;
         }
 
-        .contact-content {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
+        /* Backdrop blur and distortion layer */
+        .liquid-glass-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            border-radius: 28px;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            filter: url(#glass-distortion);
+            -webkit-filter: url(#glass-distortion);
+            isolation: isolate;
+            pointer-events: none;
+        }
+
+        /* Content styling */
+        .card-content {
             position: relative;
-            z-index: 2;
+            z-index: 10;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 32px;
+            color: white;
         }
 
-        .contact-content p {
-            font-size: clamp(1rem, 2.5vw, 1.2rem);
-            color: #d0d0d0;
-            margin-bottom: 3rem;
-            line-height: 1.7;
+        .card-content h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 16px;
         }
 
-        .contact-info {
+        .card-content p {
+            opacity: 0.8;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        /* Team Section */
+        .team-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
-            margin-top: 3rem;
+        }
+
+        .team-member {
+            text-align: center;
+        }
+
+        .member-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .member-name {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .member-role {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        /* Contact Section */
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
         }
 
         .contact-item {
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 1rem;
-            padding: 1.5rem 2rem;
-            background: rgba(0, 255, 136, 0.08);
-            border-radius: 20px;
-            border: 1px solid rgba(0, 255, 136, 0.2);
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
         }
 
-        .contact-item:hover {
-            transform: translateY(-5px);
-            background: rgba(0, 255, 136, 0.12);
-            border-color: rgba(0, 255, 136, 0.4);
-            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.1);
-        }
-
-        .contact-item span:first-child {
-            font-size: 1.5rem;
-        }
-
-        .contact-item span:last-child {
-            color: #00ff88;
-            font-weight: 600;
-            font-size: 1rem;
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
         }
 
         /* Footer */
-        .footer {
-            background: #0f0f23;
-            padding: 2rem 0;
+        footer {
             text-align: center;
-            border-top: 1px solid rgba(0, 255, 136, 0.2);
+            padding: 3rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 4rem;
         }
 
-        .footer p {
-            color: #808080;
-            margin: 0;
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .social-link {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        /* Language Content */
+        .lang-content {
+            display: none;
+        }
+
+        .lang-content.active {
+            display: block;
         }
 
         /* Responsive Design */
-        @media (max-width: 1024px) {
-            .container {
-                padding: 0 1rem;
-            }
-
-            .about-content {
-                gap: 3rem;
-            }
-
-            .services-grid {
-                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-                gap: 2rem;
-            }
-        }
-
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
+            .language-toggle {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin-bottom: 1.5rem;
+                justify-content: center;
             }
-
-            .mobile-menu-btn {
-                display: flex;
-            }
-
-            .hero {
-                padding: 6rem 0 4rem;
-                min-height: 90vh;
-            }
-
-            .about-content {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-            }
-
-            .about-text {
-                order: 2;
-            }
-
-            .about-features {
-                order: 1;
-            }
-
-            .feature-item {
-                padding: 1.5rem;
-                gap: 1rem;
-            }
-
-            .feature-icon {
-                font-size: 1.8rem;
-            }
-
-            .services-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .service-card {
-                padding: 2rem 1.5rem;
-            }
-
-            .contact-info {
-                grid-template-columns: 1fr;
+            
+            header {
+                flex-direction: column;
                 gap: 1.5rem;
             }
 
-            .section {
-                padding: 4rem 0;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 0 0.75rem;
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
             }
 
-            .hero {
-                padding: 5rem 0 3rem;
+            .hero h2 {
+                font-size: 2.5rem;
             }
 
-            .cta-button {
-                padding: 1rem 2rem;
-                font-size: 1rem;
+            .hero p {
+                font-size: 1.1rem;
             }
 
-            .feature-item {
-                flex-direction: column;
-                text-align: center;
-                gap: 1rem;
-            }
-
-            .service-card {
-                padding: 2rem 1rem;
-                text-align: center;
-            }
-
-            .contact-item {
-                flex-direction: column;
-                gap: 0.5rem;
-                padding: 1rem;
-            }
-
-            .section {
-                padding: 3rem 0;
-            }
-        }
-
-        @media (max-width: 320px) {
-            .container {
-                padding: 0 0.5rem;
-            }
-
-            .hero {
-                padding: 4rem 0 2rem;
-            }
-
-            .section {
-                padding: 2rem 0;
-            }
-        }
-
-        /* High DPI Displays */
-        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-            .hero h1 {
-                -webkit-font-smoothing: antialiased;
-                -moz-osx-font-smoothing: grayscale;
-            }
-        }
-
-        /* Landscape Mobile */
-        @media (max-height: 500px) and (orientation: landscape) {
-            .hero {
-                min-height: auto;
-                padding: 3rem 0 2rem;
-            }
-
-            .hero h1 {
-                font-size: clamp(2rem, 6vw, 3rem);
-            }
-        }
-
-        /* Tablet Portrait */
-        @media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
-            .about-content {
+            .cards-container {
                 grid-template-columns: 1fr;
-                gap: 4rem;
             }
-
-            .services-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        /* Scroll animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
         }
     </style>
-  <style>@view-transition { navigation: auto; }</style>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
-  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
- </head>
- <body>
-  <header class="header" id="header">
-   <nav class="nav container">
-    <div class="logo" id="team-name">
-     Cypher-Z
-    </div>
-    <ul class="nav-links">
-     <li><a href="#about">About</a></li>
-     <li><a href="#services">Services</a></li>
-     <li><a href="#contact">Contact</a></li>
-    </ul><button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle mobile menu"> <span></span> <span></span> <span></span> </button>
-   </nav>
-   <div class="mobile-menu" id="mobile-menu"><a href="#about">About</a> <a href="#services">Services</a> <a href="#contact">Contact</a>
-   </div>
-  </header>
-  <main>
-   <section class="hero">
-    <div class="container">
-     <div class="hero-content">
-      <h1 id="team-name-hero">Cypher-Z</h1>
-      <p id="tagline">Microcontroller Programming &amp; Ethical Hacking Specialists</p><a href="#contact" class="cta-button">Get In Touch</a>
-     </div>
-    </div>
-   </section>
-   <section id="about" class="section about">
-    <div class="container">
-     <h2 class="section-title fade-in" id="about-title">About Our Team</h2>
-     <div class="about-content">
-      <div class="about-text fade-in">
-       <p id="about-description">We are Cypher-Z, a dedicated team of technology enthusiasts specializing in microcontroller programming and ethical hacking. Our expertise spans across ESP32, BW16, Arduino platforms, and cybersecurity research in controlled environments.</p>
-       <p>Our mission is to advance the field of embedded systems security through innovative research, responsible disclosure, and educational initiatives.</p>
-      </div>
-      <div class="about-features fade-in">
-       <div class="feature-item"><span class="feature-icon">🔧</span>
-        <div class="feature-content">
-         <h4>Hardware Expertise</h4>
-         <p>ESP32, BW16, Arduino development</p>
-        </div>
-       </div>
-       <div class="feature-item"><span class="feature-icon">🛡️</span>
-        <div class="feature-content">
-         <h4>Security Research</h4>
-         <p>Ethical hacking &amp; vulnerability assessment</p>
-        </div>
-       </div>
-       <div class="feature-item"><span class="feature-icon">🎓</span>
-        <div class="feature-content">
-         <h4>Educational Focus</h4>
-         <p>University lab projects &amp; research</p>
-        </div>
-       </div>
-      </div>
-     </div>
-    </div>
-   </section>
-   <section id="services" class="section">
-    <div class="container">
-     <h2 class="section-title fade-in" id="services-title">Our Expertise</h2>
-     <div class="services-grid">
-      <div class="service-card fade-in"><span class="service-icon">⚡</span>
-       <h3>Microcontroller Development</h3>
-       <p>Custom firmware development for ESP32, BW16, and Arduino platforms. IoT solutions, sensor integration, and embedded system design.</p>
-      </div>
-      <div class="service-card fade-in"><span class="service-icon">🔐</span>
-       <h3>Ethical Hacking</h3>
-       <p>Security assessments in controlled environments, vulnerability research, and penetration testing for educational purposes.</p>
-      </div>
-      <div class="service-card fade-in"><span class="service-icon">📡</span>
-       <h3>Wireless Security</h3>
-       <p>WiFi protocol analysis, network security testing, and wireless communication research in isolated lab environments.</p>
-      </div>
-      <div class="service-card fade-in"><span class="service-icon">🔬</span>
-       <h3>Research &amp; Development</h3>
-       <p>Academic research projects, open-source contributions, and innovative solutions for embedded systems security.</p>
-      </div>
-     </div>
-    </div>
-   </section>
-   <section id="contact" class="section contact">
-    <div class="container">
-     <div class="contact-content">
-      <h2 class="section-title fade-in" id="contact-title">Connect With Us</h2>
-      <p class="fade-in">Ready to collaborate on your next project? Let's discuss how we can help with your microcontroller or security research needs.</p>
-      <div class="contact-info fade-in">
-       <div class="contact-item"><span>📧</span> <span id="contact-email">team@cypher-z.dev</span>
-       </div>
-       <div class="contact-item"><span>🌐</span> <span>Open Source Projects</span>
-       </div>
-       <div class="contact-item"><span>🎓</span> <span>University Lab</span>
-       </div>
-      </div>
-     </div>
-    </div>
-   </section>
-  </main>
-  <footer class="footer">
-   <div class="container">
-    <p>© 2024 Cypher-Z Team. Dedicated to ethical technology research and education.</p>
-   </div>
-  </footer>
-  <script>
-        // Configuration object
-        const defaultConfig = {
-            team_name: "Cypher-Z",
-            tagline: "Microcontroller Programming & Ethical Hacking Specialists",
-            about_title: "About Our Team",
-            about_description: "We are Cypher-Z, a dedicated team of technology enthusiasts specializing in microcontroller programming and ethical hacking. Our expertise spans across ESP32, BW16, Arduino platforms, and cybersecurity research in controlled environments.",
-            services_title: "Our Expertise",
-            contact_title: "Connect With Us",
-            contact_email: "team@cypher-z.dev",
-            primary_color: "#00ff88",
-            secondary_color: "#00d4ff",
-            background_color: "#0f0f23",
-            surface_color: "#1a1a2e",
-            text_color: "#e0e0e0",
-            font_family: "Inter",
-            font_size: 16
-        };
+</head>
+<body>
+    <!-- SVG Filter for Glass Effect -->
+    <svg width="0" height="0" style="position: absolute;">  
+        <defs>  
+            <filter id="glass-distortion" x="0%" y="0%" width="100%" height="100%">  
+                <feTurbulence   
+                    type="fractalNoise"   
+                    baseFrequency="0.008 0.008"  
+                    numOctaves="2"   
+                    seed="92"   
+                    result="noise"   
+                />  
+                <feGaussianBlur   
+                    in="noise"   
+                    stdDeviation="2"   
+                    result="blurred"   
+                />  
+                <feDisplacementMap   
+                    in="SourceGraphic"   
+                    in2="blurred"   
+                    scale="150"  
+                    xChannelSelector="R"   
+                    yChannelSelector="G"   
+                />  
+            </filter>  
+        </defs>  
+    </svg>
 
-        // Mobile menu functionality
-        function initMobileMenu() {
-            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const mobileMenuLinks = document.querySelectorAll('.mobile-menu a');
+    <div class="container">
+        <!-- Language Toggle -->
+        <div class="language-toggle">
+            <button class="lang-btn" data-lang="bn">বাংলা</button>
+            <button class="lang-btn active" data-lang="en">English</button>
+        </div>
 
-            if (mobileMenuBtn && mobileMenu) {
-                mobileMenuBtn.addEventListener('click', function() {
-                    mobileMenuBtn.classList.toggle('active');
-                    mobileMenu.classList.toggle('active');
-                    document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                <i class="fas fa-shield-alt logo-icon"></i>
+                <h1>Cyphar-Z</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home" class="nav-link" data-bn="হোম" data-en="Home">Home</a></li>
+                    <li><a href="#services" class="nav-link" data-bn="সেবাসমূহ" data-en="Services">Services</a></li>
+                    <li><a href="#about" class="nav-link" data-bn="আমাদের সম্পর্কে" data-en="About">About</a></li>
+                    <li><a href="#team" class="nav-link" data-bn="টিম" data-en="Team">Team</a></li>
+                    <li><a href="#contact" class="nav-link" data-bn="যোগাযোগ" data-en="Contact">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- English Content (Default) -->
+        <div class="lang-content active" id="en-content">
+            <!-- Hero Section -->
+            <section class="hero" id="home">
+                <h2 class="hero-title" data-bn="প্রযুক্তির মাধ্যমে ভবিষ্যত গড়ি" data-en="Building the Future with Technology">Building the Future with Technology</h2>
+                <p class="hero-desc" data-bn="আমরা Cyphar-Z, দক্ষিণ এশিয়ার অন্যতম সেরা টেকনোলজি টিম। মাইক্রোকন্ট্রোলার প্রোগ্রামিং, অটোমেশন সিস্টেম এবং এথিক্যাল হ্যাকিং-এ আমাদের বিশেষ দক্ষতা রয়েছে।" data-en="We are Cyphar-Z, one of the leading technology teams in South Asia. We have specialized expertise in microcontroller programming, automation systems, and ethical hacking.">We are Cyphar-Z, one of the leading technology teams in South Asia. We have specialized expertise in microcontroller programming, automation systems, and ethical hacking.</p>
+                <a href="#contact" class="cta-button contact-btn" data-bn="আমাদের সাথে যুক্ত হন" data-en="Join Us">Join Us</a>
+            </section>
+
+            <!-- Services Section -->
+            <section id="services">
+                <div class="section-title">
+                    <h2 class="services-title" data-bn="আমাদের সেবাসমূহ" data-en="Our Services">Our Services</h2>
+                    <p class="services-desc" data-bn="আমরা যে সকল প্রযুক্তিগত সেবা প্রদান করি" data-en="The technological services we provide">The technological services we provide</p>
+                </div>
+                <div class="cards-container">
+                    <div class="liquid-glass-card">
+                        <div class="card-content">
+                            <i class="fas fa-microchip card-icon"></i>
+                            <h3 class="service-title" data-bn="মাইক্রোকন্ট্রোলার প্রোগ্রামিং" data-en="Microcontroller Programming">Microcontroller Programming</h3>
+                            <p class="service-desc" data-bn="আর্ডুইনো, ESP32, Raspberry Pi সহ বিভিন্ন মাইক্রোকন্ট্রোলারের জন্য কাস্টমাইজড প্রোগ্রামিং সেবা। IoT ডিভাইস ডেভেলপমেন্ট থেকে শুরু করে এম্বেডেড সিস্টেম ডিজাইন পর্যন্ত।" data-en="Custom programming services for various microcontrollers including Arduino, ESP32, Raspberry Pi. From IoT device development to embedded system design.">Custom programming services for various microcontrollers including Arduino, ESP32, Raspberry Pi. From IoT device development to embedded system design.</p>
+                        </div>
+                    </div>
+                    <div class="liquid-glass-card">
+                        <div class="card-content">
+                            <i class="fas fa-robot card-icon"></i>
+                            <h3 class="service-title" data-bn="অটোমেশন সিস্টেম" data-en="Automation Systems">Automation Systems</h3>
+                            <p class="service-desc" data-bn="হোম অটোমেশন, ইন্ডাস্ট্রিয়াল অটোমেশন এবং স্মার্ট সিস্টেম ডিজাইন ও ইমপ্লিমেন্টেশন। সময় এবং সম্পদ সাশ্রয়ী সমাধান নিয়ে আমরা কাজ করি।" data-en="Home automation, industrial automation and smart system design & implementation. We work with time and resource efficient solutions.">Home automation, industrial automation and smart system design & implementation. We work with time and resource efficient solutions.</p>
+                        </div>
+                    </div>
+                    <div class="liquid-glass-card">
+                        <div class="card-content">
+                            <i class="fas fa-user-secret card-icon"></i>
+                            <h3 class="service-title" data-bn="এথিক্যাল হ্যাকিং" data-en="Ethical Hacking">Ethical Hacking</h3>
+                            <p class="service-desc" data-bn="সাইবার সিকিউরিটি অডিট, ভালনারেবিলিটি অ্যাসেসমেন্ট এবং পেনিট্রেশন টেস্টিং সেবা। আপনার সিস্টেমের নিরাপত্তা নিশ্চিত করুন আমাদের সাথে।" data-en="Cyber security audit, vulnerability assessment and penetration testing services. Ensure your system's security with us.">Cyber security audit, vulnerability assessment and penetration testing services. Ensure your system's security with us.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section id="about">
+                <div class="section-title">
+                    <h2 class="about-title" data-bn="আমাদের সম্পর্কে" data-en="About Us">About Us</h2>
+                    <p class="about-desc" data-bn="Cyphar-Z এর গল্প এবং আমাদের লক্ষ্য" data-en="The story of Cyphar-Z and our mission">The story of Cyphar-Z and our mission</p>
+                </div>
+                <div class="liquid-glass-card">
+                    <div class="card-content">
+                        <h3 class="about-subtitle" data-bn="আমরা কে?" data-en="Who We Are?">Who We Are?</h3>
+                        <p class="about-text" data-bn="Cyphar-Z প্রতিষ্ঠিত হয়েছে ২০২০ সালে, দক্ষিণ এশিয়ার প্রযুক্তি ক্ষেত্রে একটি নতুন মাত্রা যোগ করার লক্ষ্যে। আমরা বিশ্বাস করি যে প্রযুক্তি মানুষের জীবনকে সহজ এবং নিরাপদ করতে পারে।" data-en="Cyphar-Z was established in 2020 with the goal of adding a new dimension to the technology sector in South Asia. We believe that technology can make human life easier and safer.">Cyphar-Z was established in 2020 with the goal of adding a new dimension to the technology sector in South Asia. We believe that technology can make human life easier and safer.</p>
+                        <p class="about-text" data-bn="আমাদের টিমে রয়েছেন দক্ষ সফটওয়্যার ইঞ্জিনিয়ার, সাইবার সিকিউরিটি এক্সপার্ট এবং হার্ডওয়্যার বিশেষজ্ঞরা। আমরা মিলে কাজ করি জটিল প্রযুক্তিগত সমস্যার সহজ এবং কার্যকরী সমাধান খুঁজে বের করতে।" data-en="Our team includes skilled software engineers, cybersecurity experts, and hardware specialists. Together we work to find simple and effective solutions to complex technical problems.">Our team includes skilled software engineers, cybersecurity experts, and hardware specialists. Together we work to find simple and effective solutions to complex technical problems.</p>
+                        <p class="about-text" data-bn="আমাদের মিশন হলো দক্ষিণ এশিয়ায় প্রযুক্তির ব্যবহার বৃদ্ধি এবং তরুণ প্রজন্মকে প্রযুক্তি নির্ভর করে গড়ে তোলা।" data-en="Our mission is to increase the use of technology in South Asia and build a technology-dependent young generation.">Our mission is to increase the use of technology in South Asia and build a technology-dependent young generation.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Team Section -->
+            <section id="team">
+                <div class="section-title">
+                    <h2 class="team-title" data-bn="আমাদের টিম" data-en="Our Team">Our Team</h2>
+                    <p class="team-desc" data-bn="Cyphar-Z এর দক্ষ সদস্যবৃন্দ" data-en="The skilled members of Cyphar-Z">The skilled members of Cyphar-Z</p>
+                </div>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h3 class="member-name">Nazmuz Chakib</h3>
+                        <p class="member-role" data-bn="প্রতিষ্ঠাতা ও প্রধান প্রযুক্তি কর্মকর্তা" data-en="Chief Technology Officer">Founder & Chief Technology Officer</p>
+                        <p class="member-desc" data-bn="মাইক্রোকন্ট্রোলার এবং এম্বেডেড সিস্টেম বিশেষজ্ঞ" data-en="Microcontroller and Embedded Systems Expert">Microcontroller and Embedded Systems Expert</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h3 class="member-name">Sabrina Ahmed</h3>
+                        <p class="member-role" data-bn="সাইবার সিকিউরিটি এক্সপার্ট" data-en="Cybersecurity Expert">Cybersecurity Expert</p>
+                        <p class="member-desc" data-bn="এথিক্যাল হ্যাকিং এবং নেটওয়ার্ক সিকিউরিটি বিশেষজ্ঞ" data-en="Ethical Hacking and Network Security Specialist">Ethical Hacking and Network Security Specialist</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h3 class="member-name">Rakib Hasan</h3>
+                        <p class="member-role" data-bn="অটোমেশন ইঞ্জিনিয়ার" data-en="Automation Engineer">Automation Engineer</p>
+                        <p class="member-desc" data-bn="IoT এবং স্মার্ট সিস্টেম ডেভেলপমেন্ট বিশেষজ্ঞ" data-en="IoT and Smart System Development Specialist">IoT and Smart System Development Specialist</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h3 class="member-name">Tanzima Rahman</h3>
+                        <p class="member-role" data-bn="সফটওয়্যার আর্কিটেক্ট" data-en="Software Architect">Software Architect</p>
+                        <p class="member-desc" data-bn="ব্যাকএন্ড সিস্টেম এবং ডেটাবেস ম্যানেজমেন্ট বিশেষজ্ঞ" data-en="Backend Systems and Database Management Specialist">Backend Systems and Database Management Specialist</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact">
+                <div class="section-title">
+                    <h2 class="contact-title" data-bn="যোগাযোগ করুন" data-en="Contact Us">Contact Us</h2>
+                    <p class="contact-desc" data-bn="আমাদের সাথে কাজ করতে চান? নিচের ফর্ম পূরণ করুন" data-en="Want to work with us? Fill out the form below">Want to work with us? Fill out the form below</p>
+                </div>
+                <div class="contact-container">
+                    <div class="contact-info">
+                        <h3 class="contact-info-title" data-bn="আমাদের সাথে যোগাযোগ" data-en="Get In Touch">Get In Touch</h3>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h4 data-bn="ঠিকানা" data-en="Address">Address</h4>
+                                <p>Dhaka, Bangladesh</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4 data-bn="ইমেইল" data-en="Email">Email</h4>
+                                <p>contact@cyphar-z.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div>
+                                <h4 data-bn="ফোন" data-en="Phone">Phone</h4>
+                                <p>+880 1XXX-XXXXXX</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="liquid-glass-card">
+                        <div class="card-content">
+                            <h3 class="contact-form-title" data-bn="যোগাযোগ ফর্ম" data-en="Contact Form">Contact Form</h3>
+                            <form style="display: flex; flex-direction: column; gap: 1rem; width: 100%;">
+                                <input type="text" placeholder="Your Name" class="form-input" data-bn-placeholder="আপনার নাম" data-en-placeholder="Your Name" style="padding: 12px; border-radius: 8px; border: none; background: rgba(255,255,255,0.1); color: white;">
+                                <input type="email" placeholder="Your Email" class="form-input" data-bn-placeholder="আপনার ইমেইল" data-en-placeholder="Your Email" style="padding: 12px; border-radius: 8px; border: none; background: rgba(255,255,255,0.1); color: white;">
+                                <textarea placeholder="Your Message" rows="5" class="form-input" data-bn-placeholder="আপনার বার্তা" data-en-placeholder="Your Message" style="padding: 12px; border-radius: 8px; border: none; background: rgba(255,255,255,0.1); color: white;"></textarea>
+                                <button type="submit" class="cta-button form-submit" data-bn="বার্তা পাঠান" data-en="Send Message" style="border: none; cursor: pointer;">Send Message</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer>
+                <div class="logo">
+                    <i class="fas fa-shield-alt logo-icon"></i>
+                    <h1>Cyphar-Z</h1>
+                </div>
+                <p class="footer-tagline" data-bn="প্রযুক্তির মাধ্যমে ভবিষ্যত গড়ি" data-en="Building the Future with Technology">Building the Future with Technology</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                </div>
+                <p class="copyright" data-bn="&copy; ২০২৩ Cyphar-Z. সকল অধিকার সংরক্ষিত।" data-en="&copy; 2023 Cyphar-Z. All rights reserved.">&copy; 2023 Cyphar-Z. All rights reserved.</p>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // Language Toggle Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const langButtons = document.querySelectorAll('.lang-btn');
+            
+            // Set initial language to English
+            let currentLang = 'en';
+            
+            // Language toggle event listeners
+            langButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    
+                    // Update active button
+                    langButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Update content based on language
+                    updateContent(lang);
+                    currentLang = lang;
                 });
-
-                // Close mobile menu when clicking on links
-                mobileMenuLinks.forEach(link => {
-                    link.addEventListener('click', function() {
-                        mobileMenuBtn.classList.remove('active');
-                        mobileMenu.classList.remove('active');
-                        document.body.style.overflow = '';
-                    });
+            });
+            
+            // Function to update content based on selected language
+            function updateContent(lang) {
+                // Update navigation
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.textContent = link.getAttribute(`data-${lang}`);
                 });
-
-                // Close mobile menu when clicking outside
-                document.addEventListener('click', function(e) {
-                    if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-                        mobileMenuBtn.classList.remove('active');
-                        mobileMenu.classList.remove('active');
-                        document.body.style.overflow = '';
+                
+                // Update hero section
+                document.querySelector('.hero-title').textContent = document.querySelector('.hero-title').getAttribute(`data-${lang}`);
+                document.querySelector('.hero-desc').textContent = document.querySelector('.hero-desc').getAttribute(`data-${lang}`);
+                document.querySelector('.contact-btn').textContent = document.querySelector('.contact-btn').getAttribute(`data-${lang}`);
+                
+                // Update services section
+                document.querySelector('.services-title').textContent = document.querySelector('.services-title').getAttribute(`data-${lang}`);
+                document.querySelector('.services-desc').textContent = document.querySelector('.services-desc').getAttribute(`data-${lang}`);
+                
+                document.querySelectorAll('.service-title').forEach(title => {
+                    title.textContent = title.getAttribute(`data-${lang}`);
+                });
+                
+                document.querySelectorAll('.service-desc').forEach(desc => {
+                    desc.textContent = desc.getAttribute(`data-${lang}`);
+                });
+                
+                // Update about section
+                document.querySelector('.about-title').textContent = document.querySelector('.about-title').getAttribute(`data-${lang}`);
+                document.querySelector('.about-desc').textContent = document.querySelector('.about-desc').getAttribute(`data-${lang}`);
+                document.querySelector('.about-subtitle').textContent = document.querySelector('.about-subtitle').getAttribute(`data-${lang}`);
+                
+                document.querySelectorAll('.about-text').forEach(text => {
+                    text.textContent = text.getAttribute(`data-${lang}`);
+                });
+                
+                // Update team section
+                document.querySelector('.team-title').textContent = document.querySelector('.team-title').getAttribute(`data-${lang}`);
+                document.querySelector('.team-desc').textContent = document.querySelector('.team-desc').getAttribute(`data-${lang}`);
+                
+                document.querySelectorAll('.member-role').forEach(role => {
+                    role.textContent = role.getAttribute(`data-${lang}`);
+                });
+                
+                document.querySelectorAll('.member-desc').forEach(desc => {
+                    desc.textContent = desc.getAttribute(`data-${lang}`);
+                });
+                
+                // Update contact section
+                document.querySelector('.contact-title').textContent = document.querySelector('.contact-title').getAttribute(`data-${lang}`);
+                document.querySelector('.contact-desc').textContent = document.querySelector('.contact-desc').getAttribute(`data-${lang}`);
+                document.querySelector('.contact-info-title').textContent = document.querySelector('.contact-info-title').getAttribute(`data-${lang}`);
+                document.querySelector('.contact-form-title').textContent = document.querySelector('.contact-form-title').getAttribute(`data-${lang}`);
+                document.querySelector('.form-submit').textContent = document.querySelector('.form-submit').getAttribute(`data-${lang}`);
+                
+                document.querySelectorAll('.contact-item h4').forEach(heading => {
+                    heading.textContent = heading.getAttribute(`data-${lang}`);
+                });
+                
+                // Update form placeholders
+                document.querySelectorAll('.form-input').forEach(input => {
+                    const placeholder = input.getAttribute(`data-${lang}-placeholder`);
+                    if (placeholder) {
+                        input.placeholder = placeholder;
                     }
                 });
-            }
-        }
-
-        // Header scroll effect
-        function initHeaderScroll() {
-            const header = document.getElementById('header');
-            let lastScrollY = window.scrollY;
-
-            window.addEventListener('scroll', function() {
-                const currentScrollY = window.scrollY;
                 
-                if (currentScrollY > 100) {
-                    header.classList.add('scrolled');
-                } else {
-                    header.classList.remove('scrolled');
-                }
-
-                lastScrollY = currentScrollY;
+                // Update footer
+                document.querySelector('.footer-tagline').textContent = document.querySelector('.footer-tagline').getAttribute(`data-${lang}`);
+                document.querySelector('.copyright').textContent = document.querySelector('.copyright').getAttribute(`data-${lang}`);
+            }
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('nav a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                });
             });
-        }
 
-        // Enhanced scroll animation with intersection observer
-        function initScrollAnimations() {
+            // Add animation to cards on scroll
             const observerOptions = {
                 threshold: 0.1,
                 rootMargin: '0px 0px -50px 0px'
             };
 
-            const observer = new IntersectionObserver(function(entries) {
+            const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
                     }
                 });
             }, observerOptions);
 
-            document.querySelectorAll('.fade-in').forEach(element => {
-                observer.observe(element);
+            document.querySelectorAll('.liquid-glass-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(card);
             });
-        }
-
-        // Smooth scrolling for navigation links
-        function initSmoothScrolling() {
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        const headerHeight = document.getElementById('header').offsetHeight;
-                        const targetPosition = target.offsetTop - headerHeight - 20;
-                        
-                        window.scrollTo({
-                            top: targetPosition,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-        }
-
-        // Performance optimization for scroll events
-        function throttle(func, limit) {
-            let inThrottle;
-            return function() {
-                const args = arguments;
-                const context = this;
-                if (!inThrottle) {
-                    func.apply(context, args);
-                    inThrottle = true;
-                    setTimeout(() => inThrottle = false, limit);
-                }
-            }
-        }
-
-        // Update UI based on config
-        async function onConfigChange(config) {
-            const teamNameElements = document.querySelectorAll('#team-name, #team-name-hero');
-            teamNameElements.forEach(el => {
-                el.textContent = config.team_name || defaultConfig.team_name;
-            });
-
-            const taglineEl = document.getElementById('tagline');
-            if (taglineEl) taglineEl.textContent = config.tagline || defaultConfig.tagline;
-
-            const aboutTitleEl = document.getElementById('about-title');
-            if (aboutTitleEl) aboutTitleEl.textContent = config.about_title || defaultConfig.about_title;
-
-            const aboutDescEl = document.getElementById('about-description');
-            if (aboutDescEl) aboutDescEl.textContent = config.about_description || defaultConfig.about_description;
-
-            const servicesTitleEl = document.getElementById('services-title');
-            if (servicesTitleEl) servicesTitleEl.textContent = config.services_title || defaultConfig.services_title;
-
-            const contactTitleEl = document.getElementById('contact-title');
-            if (contactTitleEl) contactTitleEl.textContent = config.contact_title || defaultConfig.contact_title;
-
-            const contactEmailEl = document.getElementById('contact-email');
-            if (contactEmailEl) contactEmailEl.textContent = config.contact_email || defaultConfig.contact_email;
-
-            // Apply colors
-            const primaryColor = config.primary_color || defaultConfig.primary_color;
-            const secondaryColor = config.secondary_color || defaultConfig.secondary_color;
-            const backgroundColor = config.background_color || defaultConfig.background_color;
-            const surfaceColor = config.surface_color || defaultConfig.surface_color;
-            const textColor = config.text_color || defaultConfig.text_color;
-
-            document.documentElement.style.setProperty('--primary-color', primaryColor);
-            document.documentElement.style.setProperty('--secondary-color', secondaryColor);
-            document.documentElement.style.setProperty('--background-color', backgroundColor);
-            document.documentElement.style.setProperty('--surface-color', surfaceColor);
-            document.documentElement.style.setProperty('--text-color', textColor);
-
-            // Apply font
-            const customFont = config.font_family || defaultConfig.font_family;
-            const baseFontStack = '-webkit-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-            document.body.style.fontFamily = `${customFont}, ${baseFontStack}`;
-
-            // Apply font size
-            const baseSize = config.font_size || defaultConfig.font_size;
-            document.body.style.fontSize = `${baseSize}px`;
-            
-            const heroTitle = document.querySelector('.hero h1');
-            if (heroTitle) heroTitle.style.fontSize = `${baseSize * 2.5}px`;
-            
-            const heroText = document.querySelector('.hero p');
-            if (heroText) heroText.style.fontSize = `${baseSize * 1.1}px`;
-            
-            const sectionTitles = document.querySelectorAll('.section-title');
-            sectionTitles.forEach(title => {
-                title.style.fontSize = `${baseSize * 1.8}px`;
-            });
-        }
-
-        // Initialize everything
-        document.addEventListener('DOMContentLoaded', function() {
-            initMobileMenu();
-            initHeaderScroll();
-            initScrollAnimations();
-            initSmoothScrolling();
-
-            // Initialize Element SDK
-            if (window.elementSdk) {
-                window.elementSdk.init({
-                    defaultConfig: defaultConfig,
-                    onConfigChange: onConfigChange,
-                    mapToCapabilities: (config) => ({
-                        recolorables: [
-                            {
-                                get: () => config.primary_color || defaultConfig.primary_color,
-                                set: (value) => {
-                                    config.primary_color = value;
-                                    window.elementSdk.setConfig({ primary_color: value });
-                                }
-                            },
-                            {
-                                get: () => config.secondary_color || defaultConfig.secondary_color,
-                                set: (value) => {
-                                    config.secondary_color = value;
-                                    window.elementSdk.setConfig({ secondary_color: value });
-                                }
-                            },
-                            {
-                                get: () => config.background_color || defaultConfig.background_color,
-                                set: (value) => {
-                                    config.background_color = value;
-                                    window.elementSdk.setConfig({ background_color: value });
-                                }
-                            },
-                            {
-                                get: () => config.surface_color || defaultConfig.surface_color,
-                                set: (value) => {
-                                    config.surface_color = value;
-                                    window.elementSdk.setConfig({ surface_color: value });
-                                }
-                            },
-                            {
-                                get: () => config.text_color || defaultConfig.text_color,
-                                set: (value) => {
-                                    config.text_color = value;
-                                    window.elementSdk.setConfig({ text_color: value });
-                                }
-                            }
-                        ],
-                        borderables: [],
-                        fontEditable: {
-                            get: () => config.font_family || defaultConfig.font_family,
-                            set: (value) => {
-                                config.font_family = value;
-                                window.elementSdk.setConfig({ font_family: value });
-                            }
-                        },
-                        fontSizeable: {
-                            get: () => config.font_size || defaultConfig.font_size,
-                            set: (value) => {
-                                config.font_size = value;
-                                window.elementSdk.setConfig({ font_size: value });
-                            }
-                        }
-                    }),
-                    mapToEditPanelValues: (config) => new Map([
-                        ["team_name", config.team_name || defaultConfig.team_name],
-                        ["tagline", config.tagline || defaultConfig.tagline],
-                        ["about_title", config.about_title || defaultConfig.about_title],
-                        ["about_description", config.about_description || defaultConfig.about_description],
-                        ["services_title", config.services_title || defaultConfig.services_title],
-                        ["contact_title", config.contact_title || defaultConfig.contact_title],
-                        ["contact_email", config.contact_email || defaultConfig.contact_email]
-                    ])
-                });
-            }
         });
     </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99698940f602d066',t:'MTc2MTgxMjg3NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
