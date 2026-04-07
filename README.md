@@ -1,6 +1,6 @@
-# nazmuzChakib.github.io
+# GitHub Web UI Interface
 
 
-This repo is makeing for hosting a web page on github.io(pages.github.con)
+This repo is makeing for hosting a web page on github.io(pages.github.com)
 
-web link: nazmuzchakib.github.io
+You can access web by the following link: nazmuzchakib.github.io
